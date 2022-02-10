@@ -193,7 +193,7 @@ spec:
           {{- end }}
           {{- range $volumeMount := .Values.pilot.volumeMounts }}
           - name: {{ $volumeMount.name }}
-            mountPath: "{{ $volumeMount.path }}"
+            mountPath: "{{ $volumeMount.mountPath }}"
             readOnly: true
           {{- end }}
       volumes:
@@ -225,14 +225,14 @@ spec:
         configMap:
           name: pilot-jwks-extra-cacerts{{- if not (eq .Values.revision "") }}-{{ .Values.revision }}{{- end }}
   {{- end }}
-      {{- range $key, $val := .Values.pilot.configMapVolumes }}
-      - name: {{ $key }}
+      {{- range $entry := .Values.pilot.configMapVolumes }}
+      - name: {{ $entry.name }}
         configMap:
-          name: "{{ $val }}"
+          name: "{{ $entry.configMap }}"
       {{- end }}
-      {{- range $key, $val := .Values.pilot.secretVolumes }}
-      - name: {{ $key }}
+      {{- range $entry := .Values.pilot.secretVolumes }}
+      - name: {{ $secret.name }}
         secret:
-          secretName: "{{ $val }}"
+          secretName: "{{ $secret.secret }}"
       {{- end }}      
 ---
