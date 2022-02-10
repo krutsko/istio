@@ -194,7 +194,7 @@ spec:
           {{- range $volumeMount := .Values.pilot.customVolumeMounts }}
           - name: {{ $volumeMount.name }}
             mountPath: "{{ $volumeMount.path }}"
-            readOnly: {{ $volumeMount.readOnly | default true }} |
+            readOnly: "{{ $volumeMount.readOnly | default true }}"
           {{- end }}
       volumes:
       # Technically not needed on this pod - but it helps debugging/testing SDS
