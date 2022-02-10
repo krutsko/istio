@@ -191,10 +191,10 @@ spec:
           - name: extracacerts
             mountPath: /cacerts
           {{- end }}
-          {{- range $key, $val := .Values.pilot.customVolumeMounts }}
-          - name: {{ $key }}
-            mountPath: "{{ $val }}"
-            readOnly: true
+          {{- range $volumeMount := .Values.pilot.customVolumeMounts }}
+          - name: {{ $volumeMount.name }}
+            mountPath: "{{ $volumeMount.path }}"
+            readOnly: {{ $volumeMount.readOnly | default true }} |
           {{- end }}
       volumes:
       # Technically not needed on this pod - but it helps debugging/testing SDS
