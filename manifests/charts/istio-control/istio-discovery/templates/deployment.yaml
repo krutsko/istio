@@ -231,8 +231,8 @@ spec:
           name: "{{ $entry.configMap }}"
       {{- end }}
       {{- range $entry := .Values.pilot.secretVolumes }}
-      - name: {{ $secret.name }}
+      - name: {{ $entry.name }}
         secret:
-          secretName: "{{ $secret.secret }}"
+          secretName: "{{ $entry.secret }}"
       {{- end }}      
 ---
