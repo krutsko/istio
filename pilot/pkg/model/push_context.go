@@ -935,18 +935,10 @@ func (ps *PushContext) getSidecarScope(proxy *Proxy, workloadLabels labels.Colle
 	return computed
 }
 
-// DestinationRule returns a destination rule for a service name in a given domain.
-func (ps *PushContext) DestinationRule(proxy *Proxy, service *Service) *config.Config {
+// destinationRule returns a destination rule for a service name in a given namespace(proxy's configNamespace).
+func (ps *PushContext) destinationRule(proxy *Proxy, service *Service) *config.Config {
 	if service == nil {
 		return nil
-	}
-
-	// If proxy has a sidecar scope that is user supplied, then get the destination rules from the sidecar scope
-	// sidecarScope.config is nil if there is no sidecar scope for the namespace
-	if proxy.SidecarScope != nil && proxy.Type == SidecarProxy {
-		// If there is a sidecar scope for this proxy, return the destination rule
-		// from the sidecar scope.
-		return proxy.SidecarScope.destinationRules[service.Hostname]
 	}
 
 	// If the proxy config namespace is same as the root config namespace
